@@ -55,7 +55,7 @@ export const TransformedPreview = forwardRef<
           >
             {showFeature.sugarFree && (
               <img
-                src="../../../public/images/leave.png"
+                src="../../images/leave.png"
                 alt="sugar free indicator"
                 style={{
                   position: "absolute",
@@ -68,7 +68,7 @@ export const TransformedPreview = forwardRef<
             )}
             {showFeature.newProduct && (
               <img
-                src="../../../public/images/new.png"
+                src="../../images/new.png"
                 alt="sugar free indicator"
                 style={{
                   position: "absolute",
