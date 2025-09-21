@@ -11,6 +11,10 @@ export default function ProductImageProcessor() {
   const [processedImageUrl, setProcessedImageUrl] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showFeature, setShowFeature] = useState({
+    sugarFree: false,
+    newProduct: false,
+  });
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -124,6 +128,7 @@ export default function ProductImageProcessor() {
                 ref={previewRef}
                 processedImageUrl={processedImageUrl}
                 originalFileName={selectedImage?.name || "product"}
+                // showFeature={showFeature}
               />
             </div>
           )}

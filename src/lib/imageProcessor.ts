@@ -10,11 +10,16 @@ export const processImage = async (file: File): Promise<ProcessingResult> => {
     // Remove background using @imgly/background-removal
     const blob = await removeBackground(file);
 
-    // Enhance the resolution of the processed image
-    const enhancedBlob = await enhanceImageResolution(blob);
+    // Optionally skip enhancement to avoid upscaling and large files
+    // const enhancedBlob = await enhanceImageResolution(blob);
+    // Use the original size for smaller output
+    const enhancedBlob = blob;
+
+    // Convert blob to webp format with lower quality
+    const webpBlob = await convertToWebP(enhancedBlob);
 
     // Convert blob to data URL
-    const processedImageUrl = URL.createObjectURL(enhancedBlob);
+    const processedImageUrl = URL.createObjectURL(webpBlob);
 
     return { processedImageUrl };
   } catch (error) {
@@ -27,35 +32,25 @@ export const processImage = async (file: File): Promise<ProcessingResult> => {
   }
 };
 
-// Add a new function to enhance image resolution
-const enhanceImageResolution = async (blob: Blob): Promise<Blob> => {
+const convertToWebP = async (blob: Blob): Promise<Blob> => {
   return new Promise((resolve) => {
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      // Set higher resolution (2x original size)
-      canvas.width = img.width * 2;
-      canvas.height = img.height * 2;
+      canvas.width = img.width;
+      canvas.height = img.height;
 
-      // Use image smoothing techniques
-      if (ctx) {
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = "high";
+      ctx?.drawImage(img, 0, 0);
 
-        // Draw the enlarged image
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        // Convert back to Blob
-        canvas.toBlob(
-          (blob) => {
-            resolve(blob!);
-          },
-          "image/png",
-          1.0
-        );
-      }
+      canvas.toBlob(
+        (webpBlob) => {
+          resolve(webpBlob!);
+        },
+        "image/webp",
+        0.6 // Lower quality for smaller file size
+      );
     };
     img.src = URL.createObjectURL(blob);
   });

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { toPng } from "html-to-image";
+import { toSvg } from "html-to-image";
 import { Download, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 
@@ -23,15 +23,15 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 
     try {
       // Generate high-quality PNG from the preview component
-      const dataUrl = await toPng(previewRef.current, {
-        quality: 1.0,
-        pixelRatio: 2, // Higher resolution
+      const dataUrl = await toSvg(previewRef.current, {
+        quality: 1,
+        pixelRatio: 1, // Higher resolution
         backgroundColor: "#ffffff",
       });
 
       // Create download link
       const link = document.createElement("a");
-      link.download = `processed-product-${Date.now()}.png`;
+      link.download = `processed-product-${Date.now()}.svg`;
       link.href = dataUrl;
 
       // Trigger download
