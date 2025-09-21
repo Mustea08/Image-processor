@@ -15,7 +15,7 @@ export default function NotFoundPage() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button asChild>
+          <Button>
             <a href="/">Return Home</a>
           </Button>
           <Button variant="outline" onClick={() => window.history.back()}>
