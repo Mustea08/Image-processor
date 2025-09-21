@@ -26,9 +26,9 @@ export const TransformedPreview = forwardRef<
             alt={`Processed ${originalFileName}`}
             className="max-w-full max-h-full object-contain"
             style={{
-              width: "90%",
-              height: "90%",
-              // transform: "translate(-40%, 20%) rotate(30deg) scale(1.2)",
+              width: "545px",
+              height: "447px",
+              transform: "translate(-30%, 20%) rotate(30deg) scale(1.2)",
             }}
           />
         </div>
