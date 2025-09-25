@@ -10,9 +10,6 @@ export const processImage = async (file: File): Promise<ProcessingResult> => {
     // Remove background using @imgly/background-removal
     const blob = await removeBackground(file);
 
-    // Optionally skip enhancement to avoid upscaling and large files
-    // const enhancedBlob = await enhanceImageResolution(blob);
-    // Use the original size for smaller output
     const enhancedBlob = blob;
 
     // Convert blob to webp format with lower quality
