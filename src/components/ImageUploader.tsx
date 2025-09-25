@@ -59,7 +59,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-4">
+    <div className="w-full max-w-xl mx-auto space-y-4">
       {!selectedImage ? (
         <Card className="p-8">
           <div
