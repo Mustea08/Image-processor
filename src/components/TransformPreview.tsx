@@ -19,7 +19,7 @@ export const TransformedPreview = forwardRef<
   // State for interactive controls
   const [imgWidth, setImgWidth] = useState<number>(700);
   const [imgHeight, setImgHeight] = useState<number>(1440);
-  const [rotation, setRotation] = useState<number>(40);
+  const [rotation, setRotation] = useState<number>(30);
   const [translateX, setTranslateX] = useState<number>(-120);
   const [translateY, setTranslateY] = useState<number>(-300);
 
