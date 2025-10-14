@@ -22,11 +22,11 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
     setIsDownloading(true);
 
     try {
-      // Generate high-quality PNG from the preview component
       const dataUrl = await toPng(previewRef.current, {
         quality: 1,
-        pixelRatio: 1, // Higher resolution
-        backgroundColor: "#ffffff",
+        pixelRatio: 1,
+        canvasHeight: 220,
+        canvasWidth: 180,
       });
 
       // Create download link
@@ -40,7 +40,6 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
       document.body.removeChild(link);
     } catch (error) {
       console.error("Error generating download:", error);
-      // You could add toast notification here for error handling
     } finally {
       setIsDownloading(false);
     }
