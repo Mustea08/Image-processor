@@ -23,8 +23,8 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 
     try {
       const dataUrl = await toPng(previewRef.current, {
-        quality: 1,
-        pixelRatio: 1,
+        quality: 0.9,
+        pixelRatio: 4,
         canvasHeight: 220,
         canvasWidth: 180,
       });
