@@ -39,6 +39,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
         pixelRatio: 1,
         canvasHeight: selectedSize.height,
         canvasWidth: selectedSize.width,
+        backgroundColor: "#ffffff",
       });
 
       const link = document.createElement("a");

@@ -10,10 +10,8 @@ export const processImage = async (file: File): Promise<ProcessingResult> => {
     // Remove background using @imgly/background-removal
     const blob = await removeBackground(file);
 
-    const enhancedBlob = blob;
-
-    // Convert blob to webp format with lower quality
-    const webpBlob = await convertToWebP(enhancedBlob);
+    // Convert blob to webp format with high quality
+    const webpBlob = await convertToWebP(blob);
 
     // Convert blob to data URL
     const processedImageUrl = URL.createObjectURL(webpBlob);
@@ -38,7 +36,8 @@ const convertToWebP = async (blob: Blob): Promise<Blob> => {
 
       canvas.width = img.width;
       canvas.height = img.height;
-
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       ctx?.drawImage(img, 0, 0);
 
       canvas.toBlob(
@@ -46,7 +45,7 @@ const convertToWebP = async (blob: Blob): Promise<Blob> => {
           resolve(webpBlob!);
         },
         "image/webp",
-        0.6 // Lower quality for smaller file size
+        0.95
       );
     };
     img.src = URL.createObjectURL(blob);
