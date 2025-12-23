@@ -11,6 +11,7 @@ export default function ProductImageProcessor() {
   const [processedImageUrl, setProcessedImageUrl] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [removeBg, setRemoveBg] = useState(true);
   const [showFeature, setShowFeature] = useState({
     sugarFree: false,
     newProduct: false,
@@ -24,7 +25,7 @@ export default function ProductImageProcessor() {
     setIsProcessing(true);
 
     try {
-      const result = await processImage(file);
+      const result = await processImage(file, { removeBackground: removeBg });
 
       if (result.error) {
         setError(result.error);
@@ -74,6 +75,27 @@ export default function ProductImageProcessor() {
             <h2 className="text-xl font-semibold text-gray-800 mb-6">
               Upload Your Product Image
             </h2>
+            <div className="flex justify-center mb-4">
+              <div className="inline-flex rounded-md shadow-sm" role="group">
+                <Button
+                  variant={removeBg ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setRemoveBg(true)}
+                  disabled={isProcessing || Boolean(processedImageUrl)}
+                >
+                  Remove Background
+                </Button>
+                <Button
+                  variant={!removeBg ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setRemoveBg(false)}
+                  disabled={isProcessing || Boolean(processedImageUrl)}
+                  className="ml-2"
+                >
+                  Keep Background
+                </Button>
+              </div>
+            </div>
             <ImageUploader
               onImageSelect={handleImageSelect}
               selectedImage={selectedImage}
@@ -92,7 +114,9 @@ export default function ProductImageProcessor() {
                 Processing Your Image
               </h2>
               <p className="text-gray-600">
-                Removing background and applying transformations...
+                {removeBg
+                  ? "Removing background and applying transformations..."
+                  : "Processing image and converting format..."}
               </p>
             </div>
           )}

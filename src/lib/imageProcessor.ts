@@ -5,15 +5,18 @@ export interface ProcessingResult {
   error?: string;
 }
 
-export const processImage = async (file: File): Promise<ProcessingResult> => {
+export const processImage = async (
+  file: File,
+  options?: { removeBackground?: boolean }
+): Promise<ProcessingResult> => {
   try {
-    // Remove background using @imgly/background-removal
-    const blob = await removeBackground(file);
+    const shouldRemoveBg = options?.removeBackground ?? true;
 
-    // Convert blob to webp format with high quality
-    const webpBlob = await convertToWebP(blob);
+    const inputBlob = shouldRemoveBg ? await removeBackground(file) : file;
 
-    // Convert blob to data URL
+    const webpBlob = await convertToWebP(inputBlob);
+
+    // Create object URL for the processed image
     const processedImageUrl = URL.createObjectURL(webpBlob);
 
     return { processedImageUrl };
@@ -36,9 +39,11 @@ const convertToWebP = async (blob: Blob): Promise<Blob> => {
 
       canvas.width = img.width;
       canvas.height = img.height;
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
-      ctx?.drawImage(img, 0, 0);
+      if (ctx) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        ctx?.drawImage(img, 0, 0);
+      }
 
       canvas.toBlob(
         (webpBlob) => {
